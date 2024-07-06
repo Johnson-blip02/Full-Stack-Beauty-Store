@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import "./App.css";
 import { Product } from "./data/products";
+import Catalog from "./components/catalogue/catalog";
+import { Typography } from "@mui/material";
 
 function App() {
   const [products, setProducts] = useState<Product[]>([]);
@@ -18,7 +20,7 @@ function App() {
         id: prevState.length + 100,
         name: "product" + (prevState.length + 1),
         price: prevState.length * 100 + 100,
-        PictureURL: "http://something",
+        PictureURL: "/images/boot-redis1.png",
         Brand: "Alluze",
         StockQuantity: 200,
         Category: "HAIRCARE",
@@ -28,15 +30,8 @@ function App() {
 
   return (
     <div>
-      <h1>Beauty Store</h1>
-      <ul>
-        {products.map((product) => (
-          <li key={product.id}>
-            {product.name} - {product.price}
-          </li>
-        ))}
-      </ul>
-      <button onClick={addProduct}>Add Product</button>
+      <Typography variant="h1">Beauty Store</Typography>
+      <Catalog products={products} addProduct={addProduct}></Catalog>
     </div>
   );
 }

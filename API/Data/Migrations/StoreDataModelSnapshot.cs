@@ -22,20 +22,17 @@ namespace API.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("Brand")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Category")
+                    b.Property<string>("Brand")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Description")
+                    b.Property<string>("Category")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Name")
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("PictureURL")
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("PictureURL")
+                        .HasColumnType("TEXT");
 
                     b.Property<long>("Price")
                         .HasColumnType("INTEGER");
