@@ -1,0 +1,105 @@
+import { ShoppingCart } from "@mui/icons-material";
+import {
+  AppBar,
+  Badge,
+  Box,
+  FormControlLabel,
+  FormGroup,
+  IconButton,
+  List,
+  ListItem,
+  Switch,
+  Toolbar,
+  Typography,
+} from "@mui/material";
+import { NavLink } from "react-router-dom";
+
+const headLinks = [
+  { title: "catalog", path: "/catalog" },
+  { title: "about", path: "/about" },
+  { title: "contact", path: "/contact" },
+];
+
+const logLinks = [
+  { title: "login", path: "/login" },
+  { title: "register", path: "/register" },
+];
+
+const navStyles = {
+  color: "inherit",
+  typography: "h6",
+  "&:hover": {
+    color: "secondary",
+  },
+  "&.active": {
+    color: "text.secondary",
+  },
+};
+//flexGrow: 1,
+interface HeaderProps {
+  darkMode: boolean;
+  handleThemeChange: () => void;
+}
+
+export default function Header({ darkMode, handleThemeChange }: HeaderProps) {
+  return (
+    <AppBar
+      position="static"
+      sx={{
+        mb: 4,
+        bgcolor: (theme) => theme.palette.primary.main,
+      }}
+    >
+      <Toolbar
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+        }}
+      >
+        <Box display="flex" alignItems="center">
+          <Typography
+            variant="h6"
+            component={NavLink}
+            to="/"
+            sx={{ color: "inherit", textDecoration: "none" }}
+          >
+            Beauty Store Local NZ
+          </Typography>
+          <List sx={{ display: "flex" }}>
+            {headLinks.map(({ title, path }) => (
+              <ListItem component={NavLink} to={path} key={path} sx={navStyles}>
+                {title.toUpperCase()}
+              </ListItem>
+            ))}
+          </List>
+        </Box>
+
+        <Box display="flex" alignItems="center">
+          <IconButton size="large" edge="start" color="inherit" sx={{ mr: 2 }}>
+            <Badge badgeContent="4" color="secondary">
+              <ShoppingCart></ShoppingCart>
+            </Badge>
+          </IconButton>
+
+          <List sx={{ display: "flex" }}>
+            {logLinks.map(({ title, path }) => (
+              <ListItem component={NavLink} to={path} key={path} sx={navStyles}>
+                {title.toUpperCase()}
+              </ListItem>
+            ))}
+          </List>
+
+          <FormGroup>
+            <FormControlLabel
+              control={
+                <Switch checked={darkMode} onChange={handleThemeChange} />
+              }
+              label={darkMode ? "Dark Mode" : "Light Mode"}
+              sx={{ ml: 2 }}
+            />
+          </FormGroup>
+        </Box>
+      </Toolbar>
+    </AppBar>
+  );
+}

@@ -1,35 +1,20 @@
 import { Fragment } from "react/jsx-runtime";
 import { Product } from "../Data/product";
-import {
-  Avatar,
-  List,
-  ListItem,
-  ListItemAvatar,
-  ListItemText,
-  Button,
-} from "@mui/material";
+import ProductList from "./ProductList";
+import { useState, useEffect } from "react";
 
-interface Props {
-  products: Product[];
-  addProduct: () => void;
-}
+export default function Catalog() {
+  const [products, setProducts] = useState<Product[]>([]);
 
-export default function Catalog({ products, addProduct }: Props) {
+  useEffect(() => {
+    fetch("http://localhost:5000/api/products")
+      .then((response) => response.json())
+      .then((data) => setProducts(data));
+  }, []);
+
   return (
     <Fragment>
-      <List>
-        {products.map((product) => (
-          <ListItem key={product.id}>
-            <ListItemAvatar>
-              <Avatar src={product.pictureUrl}></Avatar>
-            </ListItemAvatar>
-            <ListItemText>
-              {product.name} - {product.price}
-            </ListItemText>
-          </ListItem>
-        ))}
-      </List>
-      <Button onClick={addProduct}>Add</Button>
+      <ProductList products={products}></ProductList>
     </Fragment>
   );
 }
