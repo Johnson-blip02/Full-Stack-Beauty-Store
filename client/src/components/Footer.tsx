@@ -7,10 +7,11 @@ export default function Footer() {
         width: "100%",
         backgroundColor: "primary.main",
         color: "white",
-        mt: 4,
-        py: 3,
-        px: 2,
+        py: 1, // Reduced vertical padding
+        px: 2, // Reduced horizontal padding
         textAlign: "center",
+        position: "absolute",
+        bottom: 0,
       }}
     >
       <Container maxWidth="lg">
@@ -18,14 +19,14 @@ export default function Footer() {
           © {new Date().getFullYear()} Beauty Store Local NZ. All rights
           reserved.
         </Typography>
-        <Box sx={{ mt: 2 }}>
-          <Link href="/privacy" color="inherit" sx={{ mx: 2 }}>
+        <Box sx={{ mt: 1 }}>
+          <Link href="/privacy" color="inherit" sx={{ mx: 1 }}>
             Privacy Policy
           </Link>
-          <Link href="/terms" color="inherit" sx={{ mx: 2 }}>
+          <Link href="/terms" color="inherit" sx={{ mx: 1 }}>
             Terms of Service
           </Link>
-          <Link href="/contact" color="inherit" sx={{ mx: 2 }}>
+          <Link href="/contact" color="inherit" sx={{ mx: 1 }}>
             Contact Us
           </Link>
         </Box>

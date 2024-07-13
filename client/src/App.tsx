@@ -1,15 +1,17 @@
 import { useState } from "react";
 import "./App.css";
-import Catalog from "./components/Catalog";
 import {
   Container,
   createTheme,
   CssBaseline,
   ThemeProvider,
+  Box,
 } from "@mui/material";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import { Outlet } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   const [darkMode, setDarkMode] = useState(false);
@@ -50,12 +52,28 @@ function App() {
 
   return (
     <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
+      <ToastContainer
+        position="bottom-right"
+        hideProgressBar={true}
+        theme="colored"
+      />
       <CssBaseline />
-      <Header darkMode={darkMode} handleThemeChange={handleThemeChange} />
-      <Container>
-        <Outlet />
-      </Container>
-      <Footer />
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          minHeight: "100vh",
+          position: "relative",
+        }}
+      >
+        <Header darkMode={darkMode} handleThemeChange={handleThemeChange} />
+        <Box sx={{ flex: 1 }}>
+          <Container>
+            <Outlet />
+          </Container>
+        </Box>
+        <Footer />
+      </Box>
     </ThemeProvider>
   );
 }
