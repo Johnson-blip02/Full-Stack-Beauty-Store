@@ -12,7 +12,9 @@ import {
   Toolbar,
   Typography,
 } from "@mui/material";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
+import { useStoreContext } from "../Data/context/StoreContext";
+import { useAppSelector } from "../util/configureStore";
 
 const headLinks = [
   { title: "catalog", path: "/catalog" },
@@ -42,6 +44,12 @@ interface HeaderProps {
 }
 
 export default function Header({ darkMode, handleThemeChange }: HeaderProps) {
+  const { cart } = useAppSelector((state) => state.cart);
+  const itemCount = cart?.items.reduce(
+    (total, item) => total + item.quantity,
+    0
+  );
+
   return (
     <AppBar
       position="static"
@@ -75,8 +83,15 @@ export default function Header({ darkMode, handleThemeChange }: HeaderProps) {
         </Box>
 
         <Box display="flex" alignItems="center">
-          <IconButton size="large" edge="start" color="inherit" sx={{ mr: 2 }}>
-            <Badge badgeContent="4" color="secondary">
+          <IconButton
+            component={Link}
+            to="/cart"
+            size="large"
+            edge="start"
+            color="inherit"
+            sx={{ mr: 2 }}
+          >
+            <Badge badgeContent={itemCount} color="secondary">
               <ShoppingCart></ShoppingCart>
             </Badge>
           </IconButton>

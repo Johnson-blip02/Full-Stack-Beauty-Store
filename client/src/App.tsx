@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 import {
   Container,
@@ -12,9 +12,29 @@ import Footer from "./components/Footer";
 import { Outlet } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useStoreContext } from "./Data/context/StoreContext";
+import { getCookie } from "./util/util";
+import agent from "./router/api/agent";
+import Loading from "./components/Loading";
+import { useAppDispatch } from "./util/configureStore";
+import { setCart } from "./pages/cart/cartSlice";
 
 function App() {
+  const dispatch = useAppDispatch();
+  const [loading, setLoading] = useState(true);
   const [darkMode, setDarkMode] = useState(false);
+
+  useEffect(() => {
+    const buyerId = getCookie("buyerId");
+    if (buyerId) {
+      agent.Cart.get()
+        .then((cart) => dispatch(setCart(cart)))
+        .catch((error) => console.log(error))
+        .finally(() => setLoading(false));
+    } else {
+      setLoading(false);
+    }
+  }, [dispatch]);
 
   const lightTheme = createTheme({
     palette: {
@@ -50,6 +70,8 @@ function App() {
     setDarkMode(!darkMode);
   };
 
+  if (loading) return <Loading message="Initializing web app" />;
+
   return (
     <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
       <ToastContainer
@@ -72,7 +94,7 @@ function App() {
             <Outlet />
           </Container>
         </Box>
-        <Footer />
+        {/* <Footer /> */}
       </Box>
     </ThemeProvider>
   );
