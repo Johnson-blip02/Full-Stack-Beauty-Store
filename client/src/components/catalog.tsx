@@ -6,16 +6,17 @@ import {
   fetchFilters,
   fetchProductsAsync,
   productSelectors,
+  setProductParams,
 } from "./slice/catalogSlice";
 import { FormControl, Grid, Paper } from "@mui/material";
 import ProductSearch from "./ProductSearch";
 import RadioButton from "./RadioButton";
 import CheckboxButtons from "./CheckboxButtons";
-import { setProductParams } from "./slice/catalogSlice";
+import PaginationApp from "./PaginationApp";
 
 const sortingOptions = [
   { value: "priceDesc", label: "Price - High - low" },
-  { value: "priceAsce", label: "Price - Low - High" },
+  { value: "price", label: "Price - Low - High" },
   { value: "name", label: "Alphabetical" },
 ];
 
@@ -29,34 +30,18 @@ export default function Catalog() {
     brands,
     category,
     productParams,
+    metaData,
   } = useAppSelector((state) => state.catalog);
 
   useEffect(() => {
-    if (!productsLoaded || !filtersLoaded) {
-      if (!productsLoaded) dispatch(fetchProductsAsync());
-      if (!filtersLoaded) dispatch(fetchFilters());
-    }
-  }, [productsLoaded, filtersLoaded, dispatch]);
+    if (!productsLoaded) dispatch(fetchProductsAsync());
+  }, [productsLoaded, dispatch]);
 
   useEffect(() => {
-    dispatch(fetchProductsAsync());
-  }, [productParams, dispatch]);
+    if (!filtersLoaded) dispatch(fetchFilters());
+  }, [dispatch, filtersLoaded]);
 
-  const handleSortChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(setProductParams({ orderBy: event.target.value }));
-  };
-
-  const handleBrandChange = (items: string[]) => {
-    dispatch(setProductParams({ brands: items }));
-  };
-
-  const handleCategoryChange = (items: string[]) => {
-    dispatch(setProductParams({ category: items }));
-  };
-
-  if (status.includes("pending")) {
-    return <Loading message="Loading products" />;
-  }
+  if (!filtersLoaded) return <Loading message="Loading products"></Loading>;
 
   return (
     <Grid container spacing={4}>
@@ -69,27 +54,47 @@ export default function Catalog() {
             <RadioButton
               selectOption={productParams.orderBy}
               option={sortingOptions}
-              onChange={handleSortChange}
+              onChange={(e) =>
+                dispatch(setProductParams({ orderBy: e.target.value }))
+              }
             />
           </FormControl>
         </Paper>
+
         <Paper sx={{ mb: 2, p: 2 }}>
           <CheckboxButtons
             items={brands}
             checked={productParams.brands}
-            onChange={handleBrandChange}
-          />
+            onChange={(items: string[]) =>
+              dispatch(setProductParams({ brands: items }))
+            }
+          ></CheckboxButtons>
         </Paper>
+
         <Paper sx={{ mb: 2, p: 2 }}>
           <CheckboxButtons
             items={category}
             checked={productParams.category}
-            onChange={handleCategoryChange}
-          />
+            onChange={(items: string[]) =>
+              dispatch(setProductParams({ category: items }))
+            }
+          ></CheckboxButtons>
         </Paper>
       </Grid>
       <Grid item xs={9}>
-        <ProductList products={products} />
+        <ProductList products={products}></ProductList>
+      </Grid>
+
+      <Grid item xs={3}></Grid>
+      <Grid item xs={9}>
+        {metaData && (
+          <PaginationApp
+            metaData={metaData}
+            onChangePage={(page: number) =>
+              dispatch(setProductParams({ pageNum: page }))
+            }
+          />
+        )}
       </Grid>
     </Grid>
   );

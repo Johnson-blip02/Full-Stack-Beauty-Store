@@ -36,9 +36,10 @@ function getAxiosParams(productParams: ProductParams) {
 }
 
 export const fetchProductsAsync = createAsyncThunk<
-  Product[],
-  void,
+  Product[], // Return type of the payload creator
+  void, // First argument type of the payload creator, if any (void if none)
   { state: RootState }
+  // { rejectValue: string } // Additional thunkAPI properties like rejectValue
 >("catalog/fetchProductsAsync", async (_, thunkAPI) => {
   const params = getAxiosParams(thunkAPI.getState().catalog.productParams);
   try {
@@ -50,23 +51,6 @@ export const fetchProductsAsync = createAsyncThunk<
     return thunkAPI.rejectWithValue("Failed to fetch products");
   }
 });
-
-// export const fetchProductsAsync = createAsyncThunk<
-//   Product[], // Return type of the payload creator
-//   void, // First argument type of the payload creator, if any (void if none)
-//   { state: RootState }
-//   // { rejectValue: string } // Additional thunkAPI properties like rejectValue
-// >("catalog/fetchProductsAsync", async (_, thunkAPI) => {
-//   const params = getAxiosParams(thunkAPI.getState().catalog.productParams);
-//   try {
-//     const response = await agent.Catalog.list(params);
-//     thunkAPI.dispatch(setMetaData(response.metaData));
-//     return response.items;
-//   } catch (error) {
-//     console.log(error);
-//     return thunkAPI.rejectWithValue("Failed to fetch products");
-//   }
-// });
 
 export const fetchProductAsync = createAsyncThunk<
   Product, // Return type of the payload creator
