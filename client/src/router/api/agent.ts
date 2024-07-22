@@ -2,14 +2,24 @@ import axios, { AxiosError, AxiosResponse } from "axios";
 import { toast } from "react-toastify";
 import { router } from "../Route";
 import { PaginatedResponse } from "../../Data/pagination";
+import { store } from "../../util/configureStore";
 
+// Set axios defaults
 axios.defaults.baseURL = "http://localhost:5000/api/";
 axios.defaults.withCredentials = true;
 
 const responseBody = (response: AxiosResponse) => response.data;
 
+axios.interceptors.request.use((config) => {
+  const token = store.getState().account.user?.token;
+  //Make sure Bearer has a space only between token
+  if (token) config.headers.Authorization = `Bearer ${token}`;
+  return config;
+});
+
 const sleep = () => new Promise((resolve) => setTimeout(resolve, 1000));
 
+// Axios response interceptor
 axios.interceptors.response.use(
   async (response) => {
     await sleep();
@@ -36,21 +46,26 @@ axios.interceptors.response.use(
           }
           throw modelStateErrors.flat();
         }
-        toast.error(data.title);
+        toast.error(data.title || "Bad Request");
         break;
       case 401:
-        toast.error(data.title);
+        toast.error(data.title || "Unauthorized");
+        break;
+      case 404:
+        toast.error(data.title || "Not Found");
         break;
       case 500:
         router.navigate("/server-error", { state: { error: data } });
         break;
       default:
+        toast.error(data.title || "An unexpected error occurred");
         break;
     }
     return Promise.reject(error.response);
   }
 );
 
+// Request methods
 const request = {
   get: (url: string, params?: URLSearchParams) =>
     axios.get(url, { params }).then(responseBody),
@@ -59,6 +74,7 @@ const request = {
   delete: (url: string) => axios.delete(url).then(responseBody),
 };
 
+// API endpoints
 const Catalog = {
   list: (params: URLSearchParams) => request.get("products", params),
   details: (id: number) => request.get(`products/${id}`),
@@ -73,6 +89,12 @@ const TestErrors = {
   getValidationError: () => request.get("buggy/validation-error"),
 };
 
+const Account = {
+  login: (values: any) => request.post("account/login", values),
+  register: (values: any) => request.post("account/register", values),
+  currentUser: () => request.get("account/currentUser"),
+};
+
 const Cart = {
   get: () => request.get("cart"),
   addItem: (productId: number, quantity = 1) =>
@@ -81,10 +103,12 @@ const Cart = {
     request.delete(`cart?productId=${productId}&quantity=${quantity}`),
 };
 
+// Exporting the agent
 const agent = {
   Catalog,
   TestErrors,
   Cart,
+  Account,
 };
 
 export default agent;

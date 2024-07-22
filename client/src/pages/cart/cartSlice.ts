@@ -1,6 +1,13 @@
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import {
+  createAsyncThunk,
+  createSlice,
+  isAnyOf,
+  PayloadAction,
+  SerializedError,
+} from "@reduxjs/toolkit";
 import { Cart } from "../../Data/cart";
 import agent from "../../router/api/agent";
+import { getCookie } from "../../util/util";
 
 export interface CartState {
   cart: Cart | null;
@@ -26,6 +33,28 @@ export const addCartItemAsync = createAsyncThunk<
   }
 });
 
+export const fetchCartAsync = createAsyncThunk<
+  Cart,
+  void,
+  { rejectValue: SerializedError }
+>(
+  "cart/fetchCartAsync",
+  async (_, thunkAPI) => {
+    try {
+      return await agent.Cart.get();
+    } catch (error: any) {
+      return thunkAPI.rejectWithValue({
+        message: "Failed to fetch cart",
+      } as SerializedError);
+    }
+  },
+  {
+    condition: () => {
+      if (!getCookie("buyerId")) return false;
+    },
+  }
+);
+
 export const removeCartItemAsync = createAsyncThunk<
   Cart,
   { productId: number; quantity: number; name?: string },
@@ -49,18 +78,13 @@ export const cartSlice = createSlice({
     setCart: (state, action: PayloadAction<Cart | null>) => {
       state.cart = action.payload;
     },
+    clearCart: (state) => {
+      state.cart = null;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(addCartItemAsync.pending, (state, action) => {
       state.status = "pendingAddItem" + action.meta.arg.productId;
-    });
-    builder.addCase(addCartItemAsync.fulfilled, (state, action) => {
-      state.cart = action.payload;
-      state.status = "idle";
-    });
-    builder.addCase(addCartItemAsync.rejected, (state, action) => {
-      console.log(action.payload);
-      state.status = "idle";
     });
     builder.addCase(removeCartItemAsync.pending, (state, action) => {
       state.status =
@@ -77,12 +101,27 @@ export const cartSlice = createSlice({
         state.cart.items.splice(itemPosition, 1);
       state.status = "idle";
     });
-    builder.addCase(removeCartItemAsync.rejected, (state) => {
+    builder.addCase(removeCartItemAsync.rejected, (state, action) => {
       state.status = "idle";
+      console.log(action.payload);
     });
+    builder.addMatcher(
+      isAnyOf(addCartItemAsync.fulfilled, fetchCartAsync.fulfilled),
+      (state, action) => {
+        state.cart = action.payload;
+        state.status = "idle";
+      }
+    );
+    builder.addMatcher(
+      isAnyOf(addCartItemAsync.rejected, fetchCartAsync.rejected),
+      (state, action) => {
+        console.log(action.payload);
+        state.status = "idle";
+      }
+    );
   },
 });
 
-export const { setCart } = cartSlice.actions;
+export const { setCart, clearCart } = cartSlice.actions;
 
 export default cartSlice.reducer;

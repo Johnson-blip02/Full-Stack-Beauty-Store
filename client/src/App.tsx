@@ -17,24 +17,47 @@ import { getCookie } from "./util/util";
 import agent from "./router/api/agent";
 import Loading from "./components/Loading";
 import { useAppDispatch } from "./util/configureStore";
-import { setCart } from "./pages/cart/cartSlice";
+import { fetchCartAsync, setCart } from "./pages/cart/cartSlice";
+import { fetchCurrentUser } from "./components/slice/accountSlice";
 
 function App() {
   const dispatch = useAppDispatch();
   const [loading, setLoading] = useState(true);
   const [darkMode, setDarkMode] = useState(false);
 
-  useEffect(() => {
-    const buyerId = getCookie("buyerId");
-    if (buyerId) {
-      agent.Cart.get()
-        .then((cart) => dispatch(setCart(cart)))
-        .catch((error) => console.log(error))
-        .finally(() => setLoading(false));
-    } else {
-      setLoading(false);
+  async function initApp() {
+    try {
+      await dispatch(fetchCurrentUser());
+      await dispatch(fetchCartAsync());
+    } catch (error) {
+      console.log(error);
     }
+  }
+
+  useEffect(() => {
+    (async function initApp() {
+      try {
+        await dispatch(fetchCurrentUser());
+        await dispatch(fetchCartAsync());
+      } catch (error) {
+        console.log(error);
+      }
+    })().then(() => setLoading(false));
   }, [dispatch]);
+
+  // useEffect(() => {
+  //   initApp().then(() => setLoading(false));
+  //   // const buyerId = getCookie("buyerId");
+  //   // dispatch(fetchCurrentUser());
+  //   // if (buyerId) {
+  //   //   agent.Cart.get()
+  //   //     .then((cart) => dispatch(setCart(cart)))
+  //   //     .catch((error) => console.log(error))
+  //   //     .finally(() => setLoading(false));
+  //   // } else {
+  //   //   setLoading(false);
+  //   // }
+  // }, [initApp]);
 
   const lightTheme = createTheme({
     palette: {
@@ -94,7 +117,7 @@ function App() {
             <Outlet />
           </Container>
         </Box>
-        {/* <Footer /> */}
+        <Footer />
       </Box>
     </ThemeProvider>
   );

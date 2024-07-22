@@ -13,8 +13,8 @@ import {
   Typography,
 } from "@mui/material";
 import { Link, NavLink } from "react-router-dom";
-import { useStoreContext } from "../Data/context/StoreContext";
 import { useAppSelector } from "../util/configureStore";
+import UserMenu from "./UserMenu";
 
 const headLinks = [
   { title: "catalog", path: "/catalog" },
@@ -45,6 +45,7 @@ interface HeaderProps {
 
 export default function Header({ darkMode, handleThemeChange }: HeaderProps) {
   const { cart } = useAppSelector((state) => state.cart);
+  const { user } = useAppSelector((state) => state.account);
   const itemCount = cart?.items.reduce(
     (total, item) => total + item.quantity,
     0
@@ -96,13 +97,22 @@ export default function Header({ darkMode, handleThemeChange }: HeaderProps) {
             </Badge>
           </IconButton>
 
-          <List sx={{ display: "flex" }}>
-            {logLinks.map(({ title, path }) => (
-              <ListItem component={NavLink} to={path} key={path} sx={navStyles}>
-                {title.toUpperCase()}
-              </ListItem>
-            ))}
-          </List>
+          {user ? (
+            <UserMenu />
+          ) : (
+            <List sx={{ display: "flex" }}>
+              {logLinks.map(({ title, path }) => (
+                <ListItem
+                  component={NavLink}
+                  to={path}
+                  key={path}
+                  sx={navStyles}
+                >
+                  {title.toUpperCase()}
+                </ListItem>
+              ))}
+            </List>
+          )}
 
           <FormGroup>
             <FormControlLabel
