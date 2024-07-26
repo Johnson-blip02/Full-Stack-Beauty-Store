@@ -1,6 +1,7 @@
 using API.Data;
 using API.DataTransferObject;
 using API.Entities;
+using API.Entities.Order;
 using API.Extensions;
 using API.ServicesToken;
 using Microsoft.AspNetCore.Authorization;
@@ -45,6 +46,15 @@ namespace API.Controllers
                 Cart = anonCart != null ? anonCart.MapBasketToDto() : userCart?.MapBasketToDto()
             };
         }
+
+        // [Authorize]
+        // [HttpGet("savedAddress")]
+        // public async Task<ActionResult<CustomerAddress>> GetSavedAddress(){
+        //     return await _userManager.Users
+        //         .Where(x => x.UserName == User.Identity.Name)
+        //         .Select(user => user.Address)
+        //         .FirstOrDefaultAsync();
+        // }
 
         private async Task<Cart> RetrieveCart(string buyerId)
         {

@@ -117,7 +117,7 @@ function App() {
             <Outlet />
           </Container>
         </Box>
-        <Footer />
+        {/* <Footer /> */}
       </Box>
     </ThemeProvider>
   );

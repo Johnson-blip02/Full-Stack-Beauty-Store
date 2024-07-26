@@ -103,12 +103,19 @@ const Cart = {
     request.delete(`cart?productId=${productId}&quantity=${quantity}`),
 };
 
+const Orders = {
+  list: () => request.get("orders"),
+  fetch: (id: number) => request.get(`orders.id${id}`),
+  create: (values: any) => request.post("orders", values),
+};
+
 // Exporting the agent
 const agent = {
   Catalog,
   TestErrors,
   Cart,
   Account,
+  Orders,
 };
 
 export default agent;

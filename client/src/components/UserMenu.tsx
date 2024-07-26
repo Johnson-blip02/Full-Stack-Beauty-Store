@@ -3,6 +3,7 @@ import React from "react";
 import { useAppDispatch, useAppSelector } from "../util/configureStore";
 import { signOut } from "./slice/accountSlice";
 import { clearCart } from "../pages/cart/cartSlice";
+import { Link } from "react-router-dom";
 
 export default function UserMenu() {
   const dispatch = useAppDispatch();
@@ -23,7 +24,9 @@ export default function UserMenu() {
       </Button>
       <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
         <MenuItem onClick={handleClose}>Profile</MenuItem>
-        <MenuItem onClick={handleClose}>Cart</MenuItem>
+        <MenuItem component={Link} to="/orders">
+          Orders
+        </MenuItem>
         <MenuItem
           onClick={() => {
             dispatch(signOut());
