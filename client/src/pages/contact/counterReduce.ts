@@ -8,6 +8,6 @@ const initalState: CounterState = {
   title: "redux counter",
 };
 
-export default function counterReduce(state = initalState, action: any) {
+export default function counterReduce(state = initalState, _action: any) {
   return state;
 }

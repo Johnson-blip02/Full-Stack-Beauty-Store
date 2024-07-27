@@ -14,9 +14,9 @@ import RadioButton from "./RadioButton";
 import CheckboxButtons from "./CheckboxButtons";
 import PaginationApp from "./PaginationApp";
 
-const sortingOptions = [
-  { value: "priceDesc", label: "Price - High - low" },
-  { value: "price", label: "Price - Low - High" },
+const sortOptions = [
+  { value: "priceDesc", label: "Price - High to Low" },
+  { value: "price", label: "Price - Low to High" },
   { value: "name", label: "Alphabetical" },
 ];
 
@@ -25,7 +25,6 @@ export default function Catalog() {
   const dispatch = useAppDispatch();
   const {
     productsLoaded,
-    status,
     filtersLoaded,
     brands,
     category,
@@ -41,7 +40,8 @@ export default function Catalog() {
     if (!filtersLoaded) dispatch(fetchFilters());
   }, [dispatch, filtersLoaded]);
 
-  if (!filtersLoaded) return <Loading message="Loading products"></Loading>;
+  if (!productsLoaded || !filtersLoaded)
+    return <Loading message="Loading products" />;
 
   return (
     <Grid container spacing={4}>
@@ -53,7 +53,7 @@ export default function Catalog() {
           <FormControl>
             <RadioButton
               selectOption={productParams.orderBy}
-              option={sortingOptions}
+              option={sortOptions}
               onChange={(e) =>
                 dispatch(setProductParams({ orderBy: e.target.value }))
               }
@@ -68,7 +68,7 @@ export default function Catalog() {
             onChange={(items: string[]) =>
               dispatch(setProductParams({ brands: items }))
             }
-          ></CheckboxButtons>
+          />
         </Paper>
 
         <Paper sx={{ mb: 2, p: 2 }}>
@@ -78,11 +78,11 @@ export default function Catalog() {
             onChange={(items: string[]) =>
               dispatch(setProductParams({ category: items }))
             }
-          ></CheckboxButtons>
+          />
         </Paper>
       </Grid>
       <Grid item xs={9}>
-        <ProductList products={products}></ProductList>
+        <ProductList products={products} />
       </Grid>
 
       <Grid item xs={3}></Grid>

@@ -1,12 +1,8 @@
-import Checkbox from "@mui/material/Checkbox";
-import FormControlLabel from "@mui/material/FormControlLabel";
 import FormLabel from "@mui/material/FormLabel";
 import Grid from "@mui/material/Grid";
-import OutlinedInput from "@mui/material/OutlinedInput";
 import { styled } from "@mui/system";
-import { useForm, useFormContext } from "react-hook-form";
+import { useFormContext } from "react-hook-form";
 import AppTextInput from "../../components/AppTextInput";
-import AppCheckBox from "../../components/AppCheckBox";
 
 const FormGrid = styled(Grid)(() => ({
   display: "flex",

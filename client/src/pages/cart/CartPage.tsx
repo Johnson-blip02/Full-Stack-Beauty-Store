@@ -2,12 +2,11 @@ import { Button, Grid, Typography } from "@mui/material";
 import { Fragment } from "react";
 import CartSummary from "./CartSummary";
 import { Link } from "react-router-dom";
-import { useAppDispatch, useAppSelector } from "../../util/configureStore";
+import { useAppSelector } from "../../util/configureStore";
 import CartTable from "./CartTable";
 
 export default function CartPage() {
-  const { cart, status } = useAppSelector((state) => state.cart);
-  const dispatch = useAppDispatch();
+  const { cart } = useAppSelector((state) => state.cart);
 
   if (!cart) return <Typography variant="h3">Your cart is empty</Typography>;
 

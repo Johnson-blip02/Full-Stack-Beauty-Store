@@ -33,13 +33,6 @@ import { LoadingButton } from "@mui/lab";
 
 const steps = ["Shipping address", "Payment details", "Review your order"];
 
-const logoStyle = {
-  width: "140px",
-  height: "56px",
-  marginLeft: "-4px",
-  marginRight: "-8px",
-};
-
 function getStepContent(step: number) {
   switch (step) {
     case 0:
@@ -55,7 +48,7 @@ function getStepContent(step: number) {
 
 export default function CheckoutPage() {
   const [mode, setMode] = React.useState<PaletteMode>("light");
-  const [showCustomTheme, setShowCustomTheme] = React.useState(true);
+  const [showCustomTheme] = React.useState(true);
   const checkoutTheme = createTheme(getCheckoutTheme(mode));
   const defaultTheme = createTheme({ palette: { mode } });
   const [activeStep, setActiveStep] = useState(0);

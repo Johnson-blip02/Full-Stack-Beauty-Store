@@ -3,7 +3,7 @@ import {
   FormControlLabel,
   Checkbox as MuiCheckbox,
 } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 interface Props {
   items: string[];
@@ -11,8 +11,12 @@ interface Props {
   onChange: (items: string[]) => void;
 }
 
-export default function CheckboxButtons({ items, checked, onChange }: Props) {
-  const [checkitems, setCheckeditems] = useState(checked || []);
+export default function CheckboxButtons({ items, checked = [], onChange }: Props) {
+  const [checkitems, setCheckeditems] = useState<string[]>(checked);
+
+  useEffect(() => {
+    setCheckeditems(checked);
+  }, [checked]);
 
   function handleChecked(value: string) {
     const currentIndex = checkitems.indexOf(value);

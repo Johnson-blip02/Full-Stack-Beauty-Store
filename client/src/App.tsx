@@ -8,16 +8,12 @@ import {
   Box,
 } from "@mui/material";
 import Header from "./components/Header";
-import Footer from "./components/Footer";
 import { Outlet } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useStoreContext } from "./Data/context/StoreContext";
-import { getCookie } from "./util/util";
-import agent from "./router/api/agent";
 import Loading from "./components/Loading";
 import { useAppDispatch } from "./util/configureStore";
-import { fetchCartAsync, setCart } from "./pages/cart/cartSlice";
+import { fetchCartAsync } from "./pages/cart/cartSlice";
 import { fetchCurrentUser } from "./components/slice/accountSlice";
 
 function App() {
@@ -25,14 +21,14 @@ function App() {
   const [loading, setLoading] = useState(true);
   const [darkMode, setDarkMode] = useState(false);
 
-  async function initApp() {
-    try {
-      await dispatch(fetchCurrentUser());
-      await dispatch(fetchCartAsync());
-    } catch (error) {
-      console.log(error);
-    }
-  }
+  // async function initApp() {
+  //   try {
+  //     await dispatch(fetchCurrentUser());
+  //     await dispatch(fetchCartAsync());
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // }
 
   useEffect(() => {
     (async function initApp() {
