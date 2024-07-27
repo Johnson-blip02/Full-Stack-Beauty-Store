@@ -1,7 +1,6 @@
 import { createBrowserRouter, Navigate } from "react-router-dom";
 import App from "../App";
 import HomePage from "../pages/home/HomePage";
-import Catalog from "../components/Catalog";
 import ProductDetail from "../components/ProductDetails";
 import AboutPage from "../pages/about/AboutPage";
 import ContactPage from "../pages/contact/ContactPage";
@@ -13,6 +12,7 @@ import Login from "../Data/Login";
 import Register from "../Data/Register";
 import RouteAuth from "./RouteAuth";
 import OrderPage from "../pages/order/OrderPage";
+import Catalog from "../components/catalog";
 
 export const router = createBrowserRouter([
   {
