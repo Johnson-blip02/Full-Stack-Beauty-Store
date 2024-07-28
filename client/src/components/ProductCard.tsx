@@ -10,13 +10,10 @@ import {
 } from "@mui/material";
 import { Product } from "./../Data/product";
 import { Link } from "react-router-dom";
-import { useState } from "react";
-import agent from "../router/api/agent";
 import { LoadingButton } from "@mui/lab";
-import { useStoreContext } from "../Data/context/StoreContext";
 import { moneyFormat } from "../util/util";
 import { useAppDispatch, useAppSelector } from "../util/configureStore";
-import { addCartItemAsync, setCart } from "../pages/cart/cartSlice";
+import { addCartItemAsync } from "../pages/cart/cartSlice";
 
 interface Props {
   product: Product;

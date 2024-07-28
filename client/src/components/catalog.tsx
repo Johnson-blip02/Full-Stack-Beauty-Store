@@ -25,7 +25,6 @@ export default function Catalog() {
   const dispatch = useAppDispatch();
   const {
     productsLoaded,
-    status,
     filtersLoaded,
     brands,
     category,
