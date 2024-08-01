@@ -19,7 +19,9 @@ import UserMenu from "./UserMenu";
 const headLinks = [
   { title: "catalog", path: "/catalog" },
   { title: "about", path: "/about" },
-  { title: "contact", path: "/contact" },
+  { title: "inventory", path: "/inventory" },
+  // { title: "inventory", path: "/inventory" }, // Ensure this link is included
+  // { title: "contact", path: "/contact" },
 ];
 
 const logLinks = [
@@ -31,13 +33,13 @@ const navStyles = {
   color: "inherit",
   typography: "h6",
   "&:hover": {
-    color: "secondary",
+    color: "secondary.main", // Corrected to secondary.main
   },
   "&.active": {
     color: "text.secondary",
   },
 };
-//flexGrow: 1,
+
 interface HeaderProps {
   darkMode: boolean;
   handleThemeChange: () => void;
@@ -52,19 +54,8 @@ export default function Header({ darkMode, handleThemeChange }: HeaderProps) {
   );
 
   return (
-    <AppBar
-      position="static"
-      sx={{
-        mb: 4,
-        bgcolor: (theme) => theme.palette.primary.main,
-      }}
-    >
-      <Toolbar
-        sx={{
-          display: "flex",
-          justifyContent: "space-between",
-        }}
-      >
+    <AppBar position="static" sx={{ mb: 4 }}>
+      <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
         <Box display="flex" alignItems="center">
           <Typography
             variant="h6"
@@ -93,7 +84,7 @@ export default function Header({ darkMode, handleThemeChange }: HeaderProps) {
             sx={{ mr: 2 }}
           >
             <Badge badgeContent={itemCount} color="secondary">
-              <ShoppingCart></ShoppingCart>
+              <ShoppingCart />
             </Badge>
           </IconButton>
 

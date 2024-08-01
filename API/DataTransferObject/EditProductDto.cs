@@ -1,15 +1,26 @@
-namespace API.Entities
+using System.ComponentModel.DataAnnotations;
+
+namespace API.DataTransferObject
 {
-    public class Product
+    public class EditProductDto
     {
         public int Id { get; set; }
+
+        [Required]
         public string Name { get; set; }
+
+        [Required]
         public long Price { get; set; }
-        public string PictureUrl { get; set; }
+
+        public IFormFile File { get; set; }
+
+        [Required]
         public string Brand { get; set; }
+
+        [Required]
         public int StockQuantity { get; set; }
+
+        [Required]
         public string Category { get; set; }
-        //Can do dotnet ef migrations add TitleName
-        public string PublicId { get; set; }
     }
 }

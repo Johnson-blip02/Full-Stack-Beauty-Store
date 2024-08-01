@@ -3,6 +3,7 @@ import { useController, UseControllerProps } from "react-hook-form";
 
 interface Props extends UseControllerProps {
   label: string;
+  type?: string;
 }
 
 export default function AppTestInput(props: Props) {
@@ -11,6 +12,7 @@ export default function AppTestInput(props: Props) {
     <TextField
       {...props}
       {...field}
+      typeof={props.type}
       fullWidth
       variant="outlined"
       error={!!fieldState.error}

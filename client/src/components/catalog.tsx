@@ -1,18 +1,13 @@
 import ProductList from "./ProductList";
-import { useEffect } from "react";
 import Loading from "./Loading";
 import { useAppDispatch, useAppSelector } from "../util/configureStore";
-import {
-  fetchFilters,
-  fetchProductsAsync,
-  productSelectors,
-  setProductParams,
-} from "./slice/catalogSlice";
+import { setProductParams } from "./slice/catalogSlice";
 import { FormControl, Grid, Paper } from "@mui/material";
 import ProductSearch from "./ProductSearch";
 import RadioButton from "./RadioButton";
 import CheckboxButtons from "./CheckboxButtons";
 import PaginationApp from "./PaginationApp";
+import UseProducts from "../Data/hook/useProducts";
 
 const sortingOptions = [
   { value: "priceDesc", label: "Price - High - low" },
@@ -21,24 +16,9 @@ const sortingOptions = [
 ];
 
 export default function Catalog() {
-  const products = useAppSelector(productSelectors.selectAll);
+  const { products, brands, category, filtersLoaded, metaData } = UseProducts();
   const dispatch = useAppDispatch();
-  const {
-    productsLoaded,
-    filtersLoaded,
-    brands,
-    category,
-    productParams,
-    metaData,
-  } = useAppSelector((state) => state.catalog);
-
-  useEffect(() => {
-    if (!productsLoaded) dispatch(fetchProductsAsync());
-  }, [productsLoaded, dispatch]);
-
-  useEffect(() => {
-    if (!filtersLoaded) dispatch(fetchFilters());
-  }, [dispatch, filtersLoaded]);
+  const { productParams } = useAppSelector((state) => state.catalog);
 
   if (!filtersLoaded) return <Loading message="Loading products"></Loading>;
 

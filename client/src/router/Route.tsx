@@ -13,6 +13,7 @@ import Register from "../Data/Register";
 import RouteAuth from "./RouteAuth";
 import OrderPage from "../pages/order/OrderPage";
 import Catalog from "../components/catalog";
+import Inventory from "../pages/inventory/Inventory";
 
 export const router = createBrowserRouter([
   {
@@ -24,6 +25,8 @@ export const router = createBrowserRouter([
         children: [
           { path: "checkout", element: <CheckoutPage /> },
           { path: "orders", element: <OrderPage /> },
+          //Inventory was once required but now isn't
+          { path: "inventory", element: <Inventory /> },
         ],
       },
       { path: "", element: <HomePage /> },
@@ -34,6 +37,7 @@ export const router = createBrowserRouter([
       { path: "server-error", element: <ServerError /> },
       { path: "not-found", element: <NotFound /> },
       { path: "cart", element: <CartPage /> },
+      // { path: "inventory", element: <Inventory /> },
 
       { path: "login", element: <Login /> },
       { path: "register", element: <Register /> },

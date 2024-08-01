@@ -106,6 +106,15 @@ export const catalogSlice = createSlice({
   reducers: {
     setProductParams: (state, action) => {
       state.productsLoaded = false;
+      state.productParams = {
+        ...state.productParams,
+        ...action.payload,
+        //This was added recently
+        pageNum: 1,
+      };
+    },
+    setPageNumber: (state, action) => {
+      state.productsLoaded = false;
       state.productParams = { ...state.productParams, ...action.payload };
     },
     setMetaData: (state, action) => {
@@ -113,6 +122,14 @@ export const catalogSlice = createSlice({
     },
     resetProductParams: (state) => {
       state.productParams = initialParams();
+    },
+    setProduct: (state, action) => {
+      productsAdapter.upsertOne(state, action.payload);
+      state.productsLoaded = false;
+    },
+    removeProduct: (state, action) => {
+      productsAdapter.removeOne(state, action.payload);
+      state.productsLoaded = false;
     },
   },
   extraReducers: (builder) => {
@@ -157,5 +174,11 @@ export const catalogSlice = createSlice({
 export const productSelectors = productsAdapter.getSelectors(
   (state: RootState) => state.catalog
 );
-export const { setProductParams, resetProductParams, setMetaData } =
-  catalogSlice.actions;
+export const {
+  setProductParams,
+  setPageNumber,
+  resetProductParams,
+  setMetaData,
+  setProduct,
+  removeProduct,
+} = catalogSlice.actions;
