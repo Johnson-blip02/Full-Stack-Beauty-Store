@@ -18,10 +18,8 @@ import UserMenu from "./UserMenu";
 
 const headLinks = [
   { title: "catalog", path: "/catalog" },
-  { title: "about", path: "/about" },
+  { title: "help", path: "/help" },
   { title: "inventory", path: "/inventory" },
-  // { title: "inventory", path: "/inventory" }, // Ensure this link is included
-  // { title: "contact", path: "/contact" },
 ];
 
 const logLinks = [

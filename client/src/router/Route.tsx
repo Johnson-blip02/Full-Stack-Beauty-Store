@@ -3,7 +3,6 @@ import App from "../App";
 import HomePage from "../pages/home/HomePage";
 import ProductDetail from "../components/ProductDetails";
 import AboutPage from "../pages/about/AboutPage";
-import ContactPage from "../pages/contact/ContactPage";
 import ServerError from "./Error/ServerError";
 import NotFound from "./Error/NotFound";
 import CartPage from "../pages/cart/CartPage";
@@ -14,6 +13,7 @@ import RouteAuth from "./RouteAuth";
 import OrderPage from "../pages/order/OrderPage";
 import Catalog from "../components/catalog";
 import Inventory from "../pages/inventory/Inventory";
+import HelpPage from "../pages/help/HelpPage";
 
 export const router = createBrowserRouter([
   {
@@ -33,7 +33,8 @@ export const router = createBrowserRouter([
       { path: "catalog", element: <Catalog /> },
       { path: "catalog/:id", element: <ProductDetail /> },
       { path: "about", element: <AboutPage /> },
-      { path: "contact", element: <ContactPage /> },
+      { path: "help", element: <HelpPage /> },
+      // { path: "contact", element: <ContactPage /> },
       { path: "server-error", element: <ServerError /> },
       { path: "not-found", element: <NotFound /> },
       { path: "cart", element: <CartPage /> },

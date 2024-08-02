@@ -58,7 +58,7 @@ namespace API.Controllers
         }
 
 //Could prob take out roles for any tbh
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Member")]
         [HttpPost]
         public async Task<ActionResult<Product>> CreateProduct([FromForm]CreationProductDto productDto){
             var product = _mapper.Map<Product>(productDto);
@@ -75,7 +75,7 @@ namespace API.Controllers
             return BadRequest(new ProblemDetails {Title = "Error for new product"});
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Member")]
         [HttpPut]
         public async Task<ActionResult<Product>> EditProduct([FromForm]EditProductDto productDto){
             var product = await _context.Products.FindAsync(productDto.Id);
@@ -98,7 +98,7 @@ namespace API.Controllers
             return BadRequest(new ProblemDetails {Title = "Error for edit product"});
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Member")]
         [HttpDelete]
         public async Task<ActionResult> RemoveProduct(int id){
             var product = await _context.Products.FindAsync(id);
