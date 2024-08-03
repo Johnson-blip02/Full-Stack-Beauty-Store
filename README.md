@@ -1,5 +1,7 @@
 Brief Introduction for Beauty Store Local NZ
-This Full-Stack project is based on E-Commerce stores for Beauty products. This project is designed to mimic the functions of a normal beauty store, with the ability to view, order, check out, and view purchased orders. The inspiration came from always wanting to design my store and imagine what it would look like. 
+This Full-Stack project is an E-Commerce platform for beauty products. It is designed to replicate the functions of a typical beauty store, allowing users to view products, place orders, check out, and view their purchased orders. The inspiration for this project came from my desire to design my own store and visualize what it might look like.
+
+Users can navigate to the catalog page to view beauty products and select items to add to their carts, specifying the desired quantity. Once they have finished choosing their items, they can review their cart to see what they have selected and decide if they want to remove any items. When satisfied, users can log in or register, and proceed to checkout. After filling out their details, they will receive an order confirmation and can view their current or previous orders.
 
 One thing I am proud of is the checkout process that follows the traditional process, customer details, payment, view, and then confirm.
 
