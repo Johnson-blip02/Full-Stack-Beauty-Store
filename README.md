@@ -1,4 +1,4 @@
-To run this project cd into the API folder and do dotnet run
+To run this project cd into the API folder and do dotnet run. If by any chance you want to run it in development mode, you must have the API running and cd to the client folder and do npm start
 
 Brief Introduction for Beauty Store Local NZ
 This Full-Stack project is an E-Commerce platform for beauty products. It is designed to replicate the functions of a typical beauty store, allowing users to view products, place orders, check out, and view their purchased orders. The inspiration for this project came from my desire to design my own store and visualize what it might look like.
