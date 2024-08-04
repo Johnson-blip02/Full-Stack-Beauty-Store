@@ -9,5 +9,7 @@ namespace API.Entities
         public string Brand { get; set; }
         public int StockQuantity { get; set; }
         public string Category { get; set; }
+        //Can do dotnet ef migrations add TitleName
+        public string PublicId { get; set; }
     }
 }

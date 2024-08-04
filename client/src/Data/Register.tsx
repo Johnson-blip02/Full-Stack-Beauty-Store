@@ -6,28 +6,17 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import {
-  Alert,
-  AlertTitle,
-  List,
-  ListItem,
-  ListItemText,
-  Paper,
-} from "@mui/material";
+import { Paper } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
 import agent from "../router/api/agent";
-import { FieldValues, set, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { LoadingButton } from "@mui/lab";
-import { useAppDispatch } from "../util/configureStore";
-import { signInUser } from "../components/slice/accountSlice";
-import { useState } from "react";
 import { toast } from "react-toastify";
 
 const defaultTheme = createTheme();
 
 export default function Register() {
   const navigate = useNavigate();
-  const dispatch = useAppDispatch();
 
   const {
     register,

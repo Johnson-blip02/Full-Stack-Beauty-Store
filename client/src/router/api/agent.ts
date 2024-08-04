@@ -5,7 +5,7 @@ import { PaginatedResponse } from "../../Data/pagination";
 import { store } from "../../util/configureStore";
 
 // Set axios defaults
-axios.defaults.baseURL = "http://localhost:5000/api/";
+axios.defaults.baseURL = import.meta.env.VITE_API_URL;
 axios.defaults.withCredentials = true;
 
 const responseBody = (response: AxiosResponse) => response.data;
@@ -22,7 +22,7 @@ const sleep = () => new Promise((resolve) => setTimeout(resolve, 1000));
 // Axios response interceptor
 axios.interceptors.response.use(
   async (response) => {
-    await sleep();
+    if (import.meta.env.DEV) await sleep();
     const pagination = response.headers["pagination"];
     if (pagination) {
       response.data = new PaginatedResponse(
@@ -72,6 +72,18 @@ const request = {
   post: (url: string, body: object) => axios.post(url, body).then(responseBody),
   put: (url: string, body: object) => axios.put(url, body).then(responseBody),
   delete: (url: string) => axios.delete(url).then(responseBody),
+  postForm: (url: string, data: FormData) =>
+    axios
+      .post(url, data, {
+        headers: { "Content-type": "multipart/form-data" },
+      })
+      .then(responseBody),
+  putForm: (url: string, data: FormData) =>
+    axios
+      .put(url, data, {
+        headers: { "Content-type": "multipart/form-data" },
+      })
+      .then(responseBody),
 };
 
 // API endpoints
@@ -79,6 +91,22 @@ const Catalog = {
   list: (params: URLSearchParams) => request.get("products", params),
   details: (id: number) => request.get(`products/${id}`),
   fetchFilters: () => request.get("products/filters"),
+};
+
+function createFormData(item: any) {
+  const formData = new FormData();
+  for (const key in item) {
+    formData.append(key, item[key]);
+  }
+  return formData;
+}
+
+const Invent = {
+  createProduct: (product: any) =>
+    request.postForm("products", createFormData(product)),
+  updateProduct: (product: any) =>
+    request.putForm("products", createFormData(product)),
+  deleteProduct: (id: number) => request.delete(`products/${id}`),
 };
 
 const TestErrors = {
@@ -116,6 +144,7 @@ const agent = {
   Cart,
   Account,
   Orders,
+  Invent,
 };
 
 export default agent;

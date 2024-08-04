@@ -23,7 +23,6 @@ export default function UserMenu() {
         {user?.email}
       </Button>
       <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
-        <MenuItem onClick={handleClose}>Profile</MenuItem>
         <MenuItem component={Link} to="/orders">
           Orders
         </MenuItem>

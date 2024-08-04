@@ -30,15 +30,9 @@ import agent from "../../router/api/agent.ts";
 import { useAppDispatch } from "../../util/configureStore.ts";
 import { clearCart } from "../cart/cartSlice.ts";
 import { LoadingButton } from "@mui/lab";
+import { useNavigate } from "react-router-dom";
 
 const steps = ["Shipping address", "Payment details", "Review your order"];
-
-const logoStyle = {
-  width: "140px",
-  height: "56px",
-  marginLeft: "-4px",
-  marginRight: "-8px",
-};
 
 function getStepContent(step: number) {
   switch (step) {
@@ -55,13 +49,18 @@ function getStepContent(step: number) {
 
 export default function CheckoutPage() {
   const [mode, setMode] = React.useState<PaletteMode>("light");
-  const [showCustomTheme, setShowCustomTheme] = React.useState(true);
+  const [showCustomTheme] = React.useState(true);
   const checkoutTheme = createTheme(getCheckoutTheme(mode));
   const defaultTheme = createTheme({ palette: { mode } });
   const [activeStep, setActiveStep] = useState(0);
   const [orderNumber, setOrderNumber] = useState(0);
   const [loading, setLoading] = useState(false);
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
+  const handleNavigate = () => {
+    navigate("/orders"); // Navigate to OrderPage
+  };
 
   const currentValidationSchema = validationSchema[activeStep];
 
@@ -73,18 +72,6 @@ export default function CheckoutPage() {
   const toggleColorMode = () => {
     setMode((prev) => (prev === "dark" ? "light" : "dark"));
   };
-
-  // useEffect(() => {
-  //   agent.Account.fetchAddress().then((response) => {
-  //     if (response) {
-  //       methods.reset({
-  //         ...methods.getValues(),
-  //         ...response,
-  //         saveAddress: false,
-  //       });
-  //     }
-  //   });
-  // }, [methods]);
 
   const handleNext = async (data: FieldValues) => {
     const { nameOnCard, saveAddress, ...shippingAddress } = data;
@@ -139,9 +126,7 @@ export default function CheckoutPage() {
                 alignItems: "end",
                 height: 150,
               }}
-            >
-              {/* Removed the Back to Sitemark button */}
-            </Box>
+            ></Box>
             <Box
               sx={{
                 display: "flex",
@@ -150,9 +135,7 @@ export default function CheckoutPage() {
                 width: "100%",
                 maxWidth: 500,
               }}
-            >
-              {/* <Info totalPrice={activeStep >= 2 ? "$144.97" : "$134.98"} /> */}
-            </Box>
+            ></Box>
           </Grid>
           <Grid
             item
@@ -188,7 +171,6 @@ export default function CheckoutPage() {
                   justifyContent: "space-between",
                 }}
               >
-                {/* Removed the Back to Sitemark button */}
                 <ToggleColorMode
                   mode={mode}
                   toggleColorMode={toggleColorMode}
@@ -305,6 +287,7 @@ export default function CheckoutPage() {
                   </Typography>
                   <Button
                     variant="contained"
+                    onClick={handleNavigate}
                     sx={{
                       alignSelf: "start",
                       width: { xs: "100%", sm: "auto" },

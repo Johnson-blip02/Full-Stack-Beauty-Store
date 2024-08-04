@@ -1,3 +1,4 @@
+// src/components/Header.tsx
 import { ShoppingCart } from "@mui/icons-material";
 import {
   AppBar,
@@ -16,10 +17,22 @@ import { Link, NavLink } from "react-router-dom";
 import { useAppSelector } from "../util/configureStore";
 import UserMenu from "./UserMenu";
 
+interface SimpleButtonProps {
+  onClick: () => void;
+}
+
+const SimpleButton: React.FC<SimpleButtonProps> = ({ onClick }) => {
+  return (
+    <button onClick={onClick} style={{ display: "none" }}>
+      Click me
+    </button>
+  );
+};
+
 const headLinks = [
   { title: "catalog", path: "/catalog" },
-  { title: "about", path: "/about" },
-  { title: "contact", path: "/contact" },
+  { title: "help", path: "/help" },
+  { title: "inventory", path: "/inventory" },
 ];
 
 const logLinks = [
@@ -31,13 +44,13 @@ const navStyles = {
   color: "inherit",
   typography: "h6",
   "&:hover": {
-    color: "secondary",
+    color: "secondary.main",
   },
   "&.active": {
     color: "text.secondary",
   },
 };
-//flexGrow: 1,
+
 interface HeaderProps {
   darkMode: boolean;
   handleThemeChange: () => void;
@@ -52,19 +65,8 @@ export default function Header({ darkMode, handleThemeChange }: HeaderProps) {
   );
 
   return (
-    <AppBar
-      position="static"
-      sx={{
-        mb: 4,
-        bgcolor: (theme) => theme.palette.primary.main,
-      }}
-    >
-      <Toolbar
-        sx={{
-          display: "flex",
-          justifyContent: "space-between",
-        }}
-      >
+    <AppBar position="static" sx={{ mb: 4 }}>
+      <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
         <Box display="flex" alignItems="center">
           <Typography
             variant="h6"
@@ -93,7 +95,7 @@ export default function Header({ darkMode, handleThemeChange }: HeaderProps) {
             sx={{ mr: 2 }}
           >
             <Badge badgeContent={itemCount} color="secondary">
-              <ShoppingCart></ShoppingCart>
+              <ShoppingCart />
             </Badge>
           </IconButton>
 
@@ -123,6 +125,9 @@ export default function Header({ darkMode, handleThemeChange }: HeaderProps) {
               sx={{ ml: 2 }}
             />
           </FormGroup>
+
+          {/* SimpleButton is defined but hidden */}
+          <SimpleButton onClick={() => console.log("SimpleButton clicked")} />
         </Box>
       </Toolbar>
     </AppBar>

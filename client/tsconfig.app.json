@@ -21,7 +21,13 @@
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+
+    /* Jest Configuration */
+    "types": ["jest", "node"], // Include Jest types here
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true // Enable for better compatibility
   },
-  "include": ["src"]
+  "include": ["src"],
+  "exclude": ["node_modules", "build"] // Optionally exclude directories not needed for tests
 }

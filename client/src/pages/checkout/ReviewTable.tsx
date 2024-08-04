@@ -1,12 +1,5 @@
 import React from "react";
-import {
-  TableContainer,
-  Paper,
-  Typography,
-  ListItem,
-  ListItemText,
-  List,
-} from "@mui/material";
+import { Typography, ListItem, ListItemText, List } from "@mui/material";
 import { useAppSelector } from "../../util/configureStore";
 import { CartItem } from "../../Data/cart";
 

@@ -5,8 +5,6 @@ import {
   TableBody,
   TableRow,
   TableCell,
-  Typography,
-  Grid,
 } from "@mui/material";
 import { Fragment } from "react";
 import { moneyFormat } from "../../util/util";

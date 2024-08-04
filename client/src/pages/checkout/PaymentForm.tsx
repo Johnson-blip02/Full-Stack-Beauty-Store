@@ -5,7 +5,7 @@ import Typography from "@mui/material/Typography";
 import CreditCardRoundedIcon from "@mui/icons-material/CreditCardRounded";
 import SimCardRoundedIcon from "@mui/icons-material/SimCardRounded";
 import { styled } from "@mui/system";
-import { FormLabel, Checkbox } from "@mui/material";
+import { FormLabel } from "@mui/material";
 import { useFormContext } from "react-hook-form";
 import AppTextInput from "../../components/AppTextInput";
 

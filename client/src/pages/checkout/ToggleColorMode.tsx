@@ -1,5 +1,3 @@
-import * as React from "react";
-
 import { PaletteMode } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 
