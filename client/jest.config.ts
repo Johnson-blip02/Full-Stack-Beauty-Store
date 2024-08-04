@@ -1,16 +1,23 @@
-import type { Config } from "@jest/types";
-
-const config: Config.InitialOptions = {
+// jest.config.ts
+export default {
   preset: "ts-jest",
-  testEnvironment: "jest-environment-jsdom",
-  testMatch: ["**/src/__tests__/**/*.(test|spec).ts?(x)"],
+  testEnvironment: "jsdom",
   setupFilesAfterEnv: ["<rootDir>/src/setupTests.ts"],
-  transform: {
-    "^.+\\.tsx?$": ["ts-jest", { tsconfig: "tsconfig.test.json" }],
-  },
+  testMatch: [
+    "**/__tests__/**/*.(test|spec).ts?(x)",
+    "**/?(*.)+(test|spec).ts?(x)",
+  ],
   moduleNameMapper: {
-    "^axios$": "<rootDir>/src/__mocks__/axios.ts",
+    "^.+\\.module\\.(css|sass|scss)$": "identity-obj-proxy",
+    "^.+\\.(css|less)$": "<rootDir>/src/__mocks__/styleMock.js",
+  },
+  transform: {
+    "^.+\\.(ts|tsx)$": "ts-jest",
+  },
+  moduleFileExtensions: ["ts", "tsx", "js", "jsx", "json", "node"],
+  globals: {
+    "ts-jest": {
+      tsconfig: "<rootDir>/tsconfig.test.json", // Point to the new tsconfig
+    },
   },
 };
-
-export default config;

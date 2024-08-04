@@ -23,7 +23,7 @@ export default function InventoryForm({ product, cancelChange }: Props) {
     control,
     reset,
     handleSubmit,
-    formState: { isDirty, isSubmitting },
+    formState: { isSubmitting },
   } = useForm({
     resolver: yupResolver<any>(validationSchema),
   });

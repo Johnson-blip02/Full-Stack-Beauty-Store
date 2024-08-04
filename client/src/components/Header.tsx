@@ -1,3 +1,4 @@
+// src/components/Header.tsx
 import { ShoppingCart } from "@mui/icons-material";
 import {
   AppBar,
@@ -16,6 +17,18 @@ import { Link, NavLink } from "react-router-dom";
 import { useAppSelector } from "../util/configureStore";
 import UserMenu from "./UserMenu";
 
+interface SimpleButtonProps {
+  onClick: () => void;
+}
+
+const SimpleButton: React.FC<SimpleButtonProps> = ({ onClick }) => {
+  return (
+    <button onClick={onClick} style={{ display: "none" }}>
+      Click me
+    </button>
+  );
+};
+
 const headLinks = [
   { title: "catalog", path: "/catalog" },
   { title: "help", path: "/help" },
@@ -31,7 +44,7 @@ const navStyles = {
   color: "inherit",
   typography: "h6",
   "&:hover": {
-    color: "secondary.main", // Corrected to secondary.main
+    color: "secondary.main",
   },
   "&.active": {
     color: "text.secondary",
@@ -112,6 +125,9 @@ export default function Header({ darkMode, handleThemeChange }: HeaderProps) {
               sx={{ ml: 2 }}
             />
           </FormGroup>
+
+          {/* SimpleButton is defined but hidden */}
+          <SimpleButton onClick={() => console.log("SimpleButton clicked")} />
         </Box>
       </Toolbar>
     </AppBar>

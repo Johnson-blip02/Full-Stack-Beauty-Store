@@ -1,3 +1,12 @@
 // src/setupTests.ts
 import "@testing-library/jest-dom";
-import "./__mocks__/importMetaMock"; // Import the mock for import.meta
+
+// Mock `import.meta` to avoid errors
+(globalThis as any).import = {
+  meta: {
+    env: {
+      VITE_API_URL: "http://localhost:3000",
+      DEV: false,
+    },
+  },
+};

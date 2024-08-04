@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from "react";
+import { useCallback } from "react";
 import { useDropzone, FileWithPath } from "react-dropzone";
 import { useController, UseControllerProps } from "react-hook-form";
 import { FormControl, FormHelperText } from "@mui/material";

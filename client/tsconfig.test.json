@@ -1,15 +1,11 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
-    "jsx": "react-jsx",
-    "module": "ESNext",
-    "moduleResolution": "node",
-    "target": "ES2020",
-    "noEmit": true,
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "types": ["jest", "@testing-library/jest-dom", "node"]
+    "module": "CommonJS", // Jest expects CommonJS modules
+    "target": "ES2020", // Use a modern target to support async/await, etc.
+    "jsx": "react-jsx", // Ensure JSX is supported
+    "esModuleInterop": true, // Allows default imports from CommonJS modules
+    "skipLibCheck": true // Skip type checking of declaration files
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx"],
-  "exclude": ["node_modules", "build"]
+  "include": ["src/**/*.test.ts", "src/**/*.test.tsx"]
 }
