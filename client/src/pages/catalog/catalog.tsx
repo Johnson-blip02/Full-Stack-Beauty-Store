@@ -1,16 +1,16 @@
-import ProductList from "./ProductList";
-import Loading from "./Loading";
-import { useAppDispatch, useAppSelector } from "../util/configureStore";
-import { setProductParams } from "./slice/catalogSlice";
-import { FormControl, Grid, Paper } from "@mui/material";
-import ProductSearch from "./ProductSearch";
-import RadioButton from "./RadioButton";
-import CheckboxButtons from "./CheckboxButtons";
-import PaginationApp from "./PaginationApp";
-import UseProducts from "../Data/hook/useProducts";
+import ProductList from "../../components/ProductList";
+import Loading from "../../components/Loading";
+import { useAppDispatch, useAppSelector } from "../../util/configureStore";
+import { setProductParams } from "../../components/slice/catalogSlice";
+import { FormControl, Grid, Paper, Box } from "@mui/material";
+import ProductSearch from "../../components/ProductSearch";
+import RadioButton from "../../components/RadioButton";
+import CheckboxButtons from "../../components/CheckboxButtons";
+import PaginationApp from "../../components/PaginationApp";
+import UseProducts from "../../Data/hook/useProducts";
 
 const sortingOptions = [
-  { value: "priceDesc", label: "Price - High - low" },
+  { value: "priceDesc", label: "Price - High - Low" },
   { value: "price", label: "Price - Low - High" },
   { value: "name", label: "Alphabetical" },
 ];
@@ -24,10 +24,15 @@ export default function Catalog() {
 
   return (
     <Grid container spacing={4}>
-      <Grid item xs={3}>
-        <Paper sx={{ mb: 2 }}>
+      {/* Move ProductSearch to the top and make it full width */}
+      <Grid item xs={12}>
+        <Paper sx={{ mb: 2, p: 2 }}>
           <ProductSearch />
         </Paper>
+      </Grid>
+
+      {/* Filters on the left side */}
+      <Grid item xs={3}>
         <Paper sx={{ mb: 2, p: 2 }}>
           <FormControl>
             <RadioButton
@@ -60,12 +65,14 @@ export default function Catalog() {
           ></CheckboxButtons>
         </Paper>
       </Grid>
+
+      {/* Product list on the right side */}
       <Grid item xs={9}>
         <ProductList products={products}></ProductList>
       </Grid>
 
-      <Grid item xs={3}></Grid>
-      <Grid item xs={9}>
+      {/* Pagination below the product list */}
+      <Grid item xs={12}>
         {metaData && (
           <PaginationApp
             metaData={metaData}

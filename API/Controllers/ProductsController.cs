@@ -99,7 +99,7 @@ namespace API.Controllers
         }
 
         [Authorize(Roles = "Member")]
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public async Task<ActionResult> RemoveProduct(int id){
             var product = await _context.Products.FindAsync(id);
             if(product == null) return NotFound();
@@ -109,5 +109,6 @@ namespace API.Controllers
             if(result) return Ok();
             return BadRequest(new ProblemDetails {Title = "Error for remove product"});
         }
+
     }
 }
