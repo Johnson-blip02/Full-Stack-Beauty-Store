@@ -108,7 +108,7 @@ function App() {
         }}
       >
         <Header darkMode={darkMode} handleThemeChange={handleThemeChange} />
-        <Box sx={{ flex: 1 }}>
+        <Box sx={{ flex: 1 }} data-testid="theme-element">
           <Container>
             <Outlet />
           </Container>

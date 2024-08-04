@@ -2,7 +2,7 @@ import ProductList from "../../components/ProductList";
 import Loading from "../../components/Loading";
 import { useAppDispatch, useAppSelector } from "../../util/configureStore";
 import { setProductParams } from "../../components/slice/catalogSlice";
-import { FormControl, Grid, Paper, Box } from "@mui/material";
+import { FormControl, Grid, Paper } from "@mui/material";
 import ProductSearch from "../../components/ProductSearch";
 import RadioButton from "../../components/RadioButton";
 import CheckboxButtons from "../../components/CheckboxButtons";
