@@ -1,0 +1,29 @@
+version: "3.8"
+
+services:
+  db:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: webuser
+      POSTGRES_PASSWORD: Teddybear00
+      PGDATA: /var/lib/postgresql/data
+      PG_MAJOR: 16
+      PG_VERSION: 16.3-1.pgdg120+1
+      LANG: en_US.utf8
+      PATH: /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/lib/postgresql/16/bin
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+  backend:
+    build: ./API
+    environment:
+      - DATABASE_URL=Host=db;Database=postgres;Username=webuser;Password=Teddybear00
+    depends_on:
+      - db
+    ports:
+      - "5000:80"
+
+volumes:
+  postgres-data:
