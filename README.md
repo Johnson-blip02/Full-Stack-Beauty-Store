@@ -1,3 +1,7 @@
+### Prerequisites
+Ensure Docker Desktop is installed and running
+Do the command docker-compose up --build 
+
 To run this project cd into the API folder and do dotnet run. If by any chance you want to run it in development mode, you must have the API running and cd to the client folder and do npm start
 
 Brief Introduction for Beauty Store Local NZ
